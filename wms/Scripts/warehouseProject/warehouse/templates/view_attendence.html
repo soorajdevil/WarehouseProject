@@ -1,0 +1,241 @@
+{% extends 'supervisor_header.html' %}
+
+{% block content %}
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Latest Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Custom CSS for table borders and widths */
+        table {
+            border-collapse: collapse;
+            width: 100%; /* Set a maximum width for responsiveness */
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        /* Adjust table widths */
+        .table-left {
+            width: 50%;
+        }
+
+        .table-right {
+            width: 50%;
+        }
+
+        /* Center-align tables */
+        .center-table {
+            margin: 0 auto;
+        }
+
+        /* Center-align headings */
+        .center-heading {
+            text-align: center;
+        }
+
+        /* Center-align content */
+        .center-content {
+            text-align: center;
+        }
+
+        /* Add margin to separate the two tables */
+        .table-margin {
+            margin: 0 20px;
+        }
+        body {
+          background-color: #f0f0f0; /* Replace with the desired background color */
+      }
+  
+     
+    </style>
+
+    <title>WMS_Attendence_view</title>
+</head>
+<body>
+
+  <h2 class="text-center center-heading" style="font-family: 'Your-Font'; font-size: 36px; color: #ff5733;">Employee Attendence</h2>
+
+<div class="container">
+  <div class="col-md-6">
+    <form class="form-inline my-3" method="post" action="{% url 'view_attendence' %}">
+      {% csrf_token %}
+      <input class="form-control mr-sm-3" type="search" id="searchInput" style="width: 300px; height: 40px;" placeholder="Enter employee id" aria-label="Search" name="id">
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
+    <!-- Center the tables in a row -->
+    <div class="row justify-content-center text-center my-3">
+        <!-- First table on the left -->
+        <div class="col-md-12">
+            <div class="card table-margin">
+                <div class="card-header">
+                    {% comment %} Attendance Table {% endcomment %}
+                </div>
+                <div class="card-body">
+                    <table class="table table-left center-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Employee_id</th>
+                                <th>Employee_Type</th>
+                                <th>Attendence</th>
+                                <th>Current_Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for user in stu %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.employee_id }}</td>
+                                <td>{{ user.employee_type }}</td>
+                                <td>
+                                    {% for attendance in attendances %}
+                                    {% if attendance.employee_id == user.employee_id %}
+                                    {{ attendance.attendance_status }}
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for attendance in attendances %}
+                                    {% if attendance.employee_id == user.employee_id %}
+                                    {{ attendance.current_date }}
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-center center-content">
+                    <p>Total Attendance: {{ total_attendance_days }}</p>
+                    <p>Total Absent Days: {{ total_absent_days }}</p>
+                    <p>Total Working Days: {{ total_working_days }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Second table on the right -->
+        <div class="col-md-6">
+            <div class="card table-margin">
+                <div class="card-header">
+                    <h2 class="center-heading">All Employees</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-right center-table" id="second-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Employee_id</th>
+                                <th>Employee_Type</th>
+                                <th>Attendence</th>
+                                <th>Current_Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in all_employees %}
+                            <tr>
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.employee_id }}</td>
+                                <td>{{ employee.employee_type }}</td>
+                                <td>
+                                    {% for attendance in attendances %}
+                                    {% if attendance.employee_id == employee.employee_id %}
+                                    {{ attendance.attendance_status }}
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for attendance in attendances %}
+                                    {% if attendance.employee_id == employee.employee_id %}
+                                    {{ attendance.current_date }}
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-center">
+                  <!-- Pagination controls here -->
+                  <button id="prev-page" class="btn btn-primary btn-sm"><i class="fas fa-angle-left"></i> Previous</button>
+                  <span id="page-num" style="font-size: 14px;">1</span>
+                  <button id="next-page" class="btn btn-primary btn-sm">Next <i class="fas fa-angle-right"></i></button>
+              </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Latest Bootstrap and JavaScript libraries -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const table = document.getElementById("second-table");
+      const rows = table.getElementsByTagName("tr");
+
+      const rowsPerPage = 6;
+      let currentPage = 1;
+
+      function updateTableDisplay() {
+          for (let i = 0; i < rows.length; i++) {
+              if (i < (currentPage - 1) * rowsPerPage || i >= currentPage * rowsPerPage) {
+                  rows[i].style.display = "none";
+              } else {
+                  rows[i].style.display = "";
+              }
+          }
+          document.getElementById("page-num").textContent = currentPage;
+      }
+
+      updateTableDisplay();
+
+      document.getElementById("prev-page").addEventListener("click", function () {
+          if (currentPage > 1) {
+              currentPage--;
+              updateTableDisplay();
+          }
+      });
+
+      document.getElementById("next-page").addEventListener("click", function () {
+          const totalPages = Math.ceil(rows.length / rowsPerPage);
+          if (currentPage < totalPages) {
+              currentPage++;
+              updateTableDisplay();
+          }
+      });
+  });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+{% endblock %}

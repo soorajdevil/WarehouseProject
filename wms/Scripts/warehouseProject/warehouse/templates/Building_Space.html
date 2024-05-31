@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+{% csrf_token %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Space</title>
+  <script src="{% static 'js/building_search.js' %}"></script>
+  <style>
+    /* Add your CSS styling here */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden; /* Prevent scrolling */
+    }
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("{% static 'Sign_In/images/building space.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(3px); /* Apply the blur effect to the background */
+      z-index: -1; /* Place the background behind other content */
+    }
+    .container {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 80%;
+      max-width: 800px;
+    }
+    .module-box {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-direction: column; /* Added this to align items vertically */
+    }
+    .module-box label {
+      margin-right: 10px;
+    }
+    .content-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .content-table th, .content-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    .content-table th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<div class="background-container"></div>
+
+<div class="container">
+  <div class="module-box">
+    <h1>BUILDING SPACE</h1> <!-- Added title here -->
+    <form method="get" action="">
+      
+      <label for="building">Select Building:</label>
+      <select id="building" name="building">
+        <option value="">-- Select Building --</option>
+        {% for building in buildings %}
+          <option value="{{ building.id }}">{{ building.Building_Name }}</option>
+        {% endfor %}
+      </select>
+      <input type="submit" id="submit" value="Search">
+    </form>
+  </div>
+
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>S1.No</th>
+        <th>Building</th>
+        <th>Rack</th>
+        <th>Available</th>
+        <th>Percentage</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if selected_building %}
+        <tr>
+          <td>1</td>
+          <td>{{ selected_building.Building_Name }}</td>
+          <td>
+            {% for rack in racks_data %}
+              {{ rack.rack_name }}<br>
+            {% empty %}
+              No racks available
+            {% endfor %}
+          </td>
+          <td>{{ available_racks }}</td>
+          <td><input type="range" name="" value=""></td>
+          <td><a href="" class="edit" id="edit">choose</a></td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

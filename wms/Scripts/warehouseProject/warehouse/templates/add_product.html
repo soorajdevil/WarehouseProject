@@ -1,0 +1,68 @@
+{% extends 'supervisor_header.html' %}
+
+{% block content %}
+{% load static %}
+<head>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for form input */
+        .custom-input {
+            border-color: #3498db;
+            color: #3498db;
+            background-color: transparent;
+        }
+        /* Increase the height of textareas */
+    textarea {
+        width: 100%;
+        height: 350px; /* Adjust the height as needed */
+        padding: 16px;
+        font-size: 16px;
+    }
+
+        /* Outer Background Image */
+        body {
+            background-image: url('{% static 'imagenew/product2.png' %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        {% comment %} textarea {
+            width: 100%;
+            height: 350px; /* Adjust the height as needed */
+            padding: 500px;
+            font-size: 16px;
+        } {% endcomment %}
+
+        /* Custom CSS for form container */
+        .form-container {
+            max-width: 800px;
+            margin: 400px auto 0; /* Add 100px margin to the top, centering the form */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 500px; /* Adjust the height as needed */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent white background */
+        }
+        /* Increase the text size for the "Product Categories" field */
+.custom-input#id_product_categories {
+    font-size: 18px; /* Adjust the font size as needed */
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="mb-4">Add Product</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ formm.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Add Box</button>
+                <a href="{% url 'home_supervisor' %}" class="btn btn-secondary">Back</a>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

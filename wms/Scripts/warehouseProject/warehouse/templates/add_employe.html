@@ -1,0 +1,86 @@
+{% extends 'manager_header.html' %}
+
+{% block content %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS (Bootstrap 5) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #e8eaf6; /* Light purple background */
+        }
+        .alert-danger {
+            background-color: #DC3545; /* Bootstrap danger color */
+            color: #fff; /* Text color for alert */
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+        }
+        .custom-card {
+            max-width: 800px; /* Adjust the max-width as needed */
+            margin: 0 auto; /* Center the card horizontally */
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners for the card */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Box shadow for a lifted effect */
+            background-color: #fff; /* White background for the card */
+        }
+    </style>
+
+    <title>WMS_emp_registration</title>
+</head>
+<body>
+<div class="container-fluid" style="background-color: #e8eaf6; padding: 20px;"> <!-- Light purple background -->
+    <div class="container custom-card"> <!-- Adjust the max-width as needed and center horizontally -->
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center">Add Person</h1>
+                <form action="" method="post" id="registrationForm">
+                    {% csrf_token %}
+                    {{ formm.as_p }}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript (Bootstrap 5) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    // Form submission with SweetAlert
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        var nameInput = document.getElementById('id_name');
+        var emailInput = document.getElementById('id_email');
+        
+        if (nameInput.value.trim() === '' || emailInput.value.trim() === '') {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: 'Name and Email are required.'
+            });
+        } else {
+            // Show a success dialog box using SweetAlert
+            event.preventDefault(); // Prevent the default form submission
+            Swal.fire({
+                icon: 'success',
+                title: 'Submit Message',
+                text: 'Your form has been submitted successfully.'
+            }).then(function() {
+                // After the alert is closed, submit the form
+                document.getElementById('registrationForm').submit();
+            });
+        }
+    });
+</script>
+
+</body>
+{% endblock %}

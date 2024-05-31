@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Vehicle Details</h1>
+
+  <ul>
+    <li><strong>Vehicle Category:</strong> {{ vehicle.vehicle_Catagories }}</li>
+    <li><strong>Vehicle Number:</strong> {{ vehicle.Vehicle_Number }}</li>
+    <!-- Add more details as needed -->
+  </ul>
+
+  <a href="{% url 'box_transit' %}">Back to Transit</a>
+{% endblock %}

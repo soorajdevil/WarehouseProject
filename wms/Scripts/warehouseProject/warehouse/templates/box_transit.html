@@ -1,0 +1,110 @@
+{% extends 'supervisor_header.html' %}
+
+{% block content %}
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Box Transit</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Add your custom CSS link -->
+  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <!-- Create a header section -->
+  {% comment %} <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Box Transit</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header> {% endcomment %}
+
+  <div class="container mt-4">
+    <h1>Box Transit</h1>
+    <style>
+      /* Custom CSS for table font size */
+      table.table {
+        font-size: 18px; /* Increase the font size for the entire table */
+      }
+  
+      table.table th,
+      table.table td {
+        font-size: 16px; /* Increase the font size for table headers and data cells */
+      }
+      
+    </style>
+    <form method="post" action="{% url 'update_box' %}">
+      {% csrf_token %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Sl.No</th>
+            <th>Box</th>
+            <th>Product Name</th>
+            <th>Building</th>
+            <th>Rack</th>
+            <th>Vehicle</th>
+            <th>Action</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for box in boxes %}
+            {% if box.Vehicle != 'vehicle_Catagories' and box.Action != 'exit' %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ box.Box_Name }}</td>
+                <td>{{ box.product_id.Product_Name }}</td>
+                <td>{{ box.building_id.Building_Name }}</td>
+                <td>{{ box.rack_id.rack_name }}</td>
+                <td>
+                  <input type="hidden" name="box_id_{{ box.Box_id }}" value="{{ box.Box_id }}">
+                  <select class="form-control" name="vehicle_transit_{{ box.Box_id }}">
+                    <option value="">Select a vehicle</option>
+                    {% for vehicle in vehicles %}
+                      <option value="{{ vehicle.vehicle_Catagories }} - {{ vehicle.Vehicle_Number }}">{{ vehicle.vehicle_Catagories }} - {{ vehicle.Vehicle_Number }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>
+                  <select class="form-control" name="box_action_{{ box.Box_id }}">
+                    <option value="">Select an Action</option>
+                    <option value="transit">Internal transit</option>
+                    <option value="exit">Exit</option>
+                  </select>
+                </td>
+                <td>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+
+  <!-- Add Bootstrap JavaScript and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}

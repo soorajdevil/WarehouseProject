@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Supervisor</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Add your custom CSS here -->
+    <style>
+        /* Custom CSS */
+        body {
+            background-image: url('../../static/imagenew/wms2.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px; /* Adjust padding */
+            border-radius: 10px; /* Adjust border radius */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
+            width: 700px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <center><h1>Profile</h1></center>
+        
+        {% block content %}
+        <h4>Profile Updation</h4>
+         
+        <form action="{% url 'edit_profile' id=17 %}" method="post">
+            {% csrf_token %}
+            
+            <!-- Make the "supervisor_id" field readonly -->
+            <div class="form-group">
+                <label for="supervisor_id">Supervisor ID:</label>
+                <input type="text" id="supervisor_id" name="supervisor_id" value="{{ ser.instance.supervisor_id }}" class="form-control" readonly>
+            </div>
+            
+            <!-- Add an editable "name" field -->
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ ser.instance.name }}" class="form-control">
+            </div>
+        
+            <!-- Add an editable "DOB" field -->
+            <div class="form-group">
+                <label for="DOB">DOB:</label>
+                <input type="date" id="DOB" name="DOB" value="{{ ser.instance.DOB }}" class="form-control">
+            </div>
+            
+            <!-- Add an editable "gender" field -->
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" name="gender" value="{{ ser.instance.gender }}" class="form-control">
+            </div>
+            
+            <!-- Add an editable "contact no" field -->
+            <div class="form-group">
+                <label for="contact_no">Contact No:</label>
+                <input type="text" id="contact_no" name="contact_no" value="{{ ser.instance.contact_no }}" class="form-control">
+            </div>
+            
+            <!-- Add an editable "email" field -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ ser.instance.email }}" class="form-control"readonly>
+            </div>
+            
+            <!-- Add an editable "password" field -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control">
+            </div>
+        
+            <!-- Add a password confirmation field -->
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+            </div>
+            
+            <!-- Add other fields here -->
+            
+            <input type="submit" class="btn btn-success" value="Update">
+            <!-- Add a back button -->
+        
+            <a href="{% url 'home_supervisor' %}" class="btn btn-secondary mb-3">Back</a>
+        </form>
+        
+        {% endblock content %}
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

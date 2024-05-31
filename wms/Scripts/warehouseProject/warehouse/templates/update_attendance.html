@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-image: url('{% static 'imagenew/your-background-image.jpg' %}'); /* Replace with the path to your background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .container {
+            margin-top: 50px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff; /* Light gray background */
+        }
+        .custom-header {
+            background-color: #800080; /* Darker Purple color */
+            color: #fff; /* Text color for header */
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .btn-success {
+            background-color: #28A745; /* Bootstrap success color */
+            border-color: #28A745;
+        }
+        .btn-primary {
+            background-color: #007BFF; /* Bootstrap primary color */
+            border-color: #007BFF;
+        }
+        .btn-secondary {
+            background-color: #6C757D; /* Bootstrap secondary color */
+            border-color: #6C757D;
+        }
+        /* Additional table styling */
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+        }
+
+
+    </style>
+
+    <title>WMS_Attendence_view</title>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="custom-header">
+        <h3 class="display-4">Employee Attendance</h3>
+    </div>
+
+    <form class="form-inline my-3">
+        <input class="form-control mr-sm-3" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="searchTable()">Search</button>
+    </form>
+    {% block content %}
+
+    <div class="table-responsive">
+        <form method="post" action="{% url 'update_attendance' %}">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <thead>
+                 <tr>
+            <th>Employee</th>
+            <th>Attendance Status</th>
+            <th></th>
+          </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <select class="form-control" name="employee">
+                            <option value="">Select an Employee</option>
+                            {% for user in employees %}
+                            <option value="{{ user.employee_id }}">{{ user.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="attendance_status">
+                            <option value="">Select Attendance Status</option>
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <!-- Add more options as needed -->
+                        </select>
+
+
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    {% endblock content %}
+</div>
+
+<script>
+      function searchTable() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("searchInput");
+          filter = input.value.toUpperCase();
+          table = document.querySelector("table");
+          tr = table.getElementsByTagName("tr");
+  
+          // Loop through all table rows and hide those that don't match the search query
+          for (i = 1; i < tr.length; i++) { // Start from index 1 to skip the table header
+              td = tr[i].getElementsByTagName("td");
+              var rowMatchesSearch = false; // Track if any cell in the row matches the search query
+              for (var j = 0; j < td.length; j++) {
+                  cell = td[j];
+                  if (cell) {
+                      txtValue = cell.textContent || cell.innerText;
+                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                          rowMatchesSearch = true;
+                          break;
+                      }
+                  }
+              }
+              // Display/hide the row based on whether it matches the search query
+              tr[i].style.display = rowMatchesSearch ? "" : "none";
+          }
+      }
+
+
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"></script>
+</body>
+</html>

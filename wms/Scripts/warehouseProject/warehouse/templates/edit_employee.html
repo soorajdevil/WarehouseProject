@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    {%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EditPage</title>
+    
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Add your custom CSS (styles.css) -->
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles.css' %}">
+    
+    <!-- Add custom CSS to adjust card style -->
+    <style>
+        .custom-card {
+            width: 400px; /* Adjust the card width as needed */
+            margin: 0 auto; /* Center the card horizontally */
+            margin-top: 50px; /* Adjust the top margin as needed */
+            padding: 20px; /* Adjust padding as needed */
+        }
+
+        /* Adjust the size of form widgets (input fields) */
+        .custom-form .form-control {
+            height: 40px; /* Adjust input field height as needed */
+        }
+
+        /* Adjust the size of the "Add" button */
+        .custom-form .btn-custom {
+            height: 40px; /* Adjust button height as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        {% block content %}
+        <!-- Bootstrap card with custom styling -->
+        <div class="card custom-card">
+            <div class="card-body">
+                <center><h4>Add Employee</h4></center>
+                <form action="" method="post" class="custom-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success btn-custom">Add</button>
+                </form>
+                <!-- Back button -->
+                <a href="{% url 'home_manager' %}" class="btn btn-secondary btn-custom mt-3">Back</a>
+            </div>
+                </form>
+                
+            </div>
+        </div>
+        <!-- End Bootstrap card -->
+        {% endblock content %}
+    </div>
+    
+    <!-- Add Bootstrap JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

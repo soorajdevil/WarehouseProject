@@ -1,0 +1,24 @@
+<!-- chatbot/templates/chatbot/chatbot.html -->
+{% comment %} {% extends "base.html" %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div id="Smallchat">
+            <!-- Chat interface code goes here -->
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Send</button>
+            </form>
+            <div class="Messages_list" id="view">
+                {% for message in chat_messages %}
+                <p class="received">{{ message.text }}</p>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+</html>

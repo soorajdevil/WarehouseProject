@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>EditPage
+        </title>
+    </head><body>
+        <center><h1>EditPage</h1>
+        
+        <div class="container mt-5">
+            {% block content %}
+            <h4>Edit Job</h4>
+            <form action="" method="post">
+               {% csrf_token %}
+                {{formmm.as_p}}
+                <input type="submit" class="btn btn-success " value="Add">
+                
+            </form>
+        </div>
+        {% endblock content %}
+
+       
+
+        </center>
+        </table>
+        </body>
+
+</html>

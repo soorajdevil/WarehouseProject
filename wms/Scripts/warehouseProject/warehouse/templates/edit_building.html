@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EditPage</title>
+
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        /* Add custom CSS for card styling */
+        .custom-card {
+            width: 400px; /* Adjust the card width as needed */
+            margin: 0 auto; /* Center the card horizontally */
+            margin-top: 50px; /* Adjust the top margin as needed */
+            padding: 20px; /* Adjust padding as needed */
+            border-radius: 10px; /* Rounded corners for the card */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for the card */
+            background-color: #f4f4f4; /* Updated background color */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <center><h1>EditPage</h1></center>
+    {% block content %}
+    <!-- Bootstrap card with custom styling -->
+    <div class="card custom-card">
+        <div class="card-body">
+            <h4 class="card-title">Edit Building</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Add</button>
+            </form>
+        </form>
+        <!-- Back Button -->
+        <a href="{% url 'view_building' %}" class="btn btn-primary mt-3">Back</a>
+    </div>
+        </div>
+    </div>
+    <!-- End Bootstrap card -->
+    {% endblock content %}
+</div>
+
+<!-- Add Bootstrap JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

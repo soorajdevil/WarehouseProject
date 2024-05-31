@@ -1,0 +1,65 @@
+{% extends 'supervisor_header.html' %}
+
+{% block content %}
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Box Transit</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS to increase card size */
+    .custom-card {
+      width: 80%; /* Adjust the width as needed */
+      margin: 0 auto; /* Center the card horizontally */
+      font-size: 14px; /* Adjust the font size as needed */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="card custom-card"> <!-- Add custom-card class to the card -->
+      <div class="card-header">
+        <h1 class="card-title">View Box Transit</h1>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Box</th>
+              <th>Product Name</th>
+              <th>Building</th>
+              <th>Rack</th>
+              <th>Vehicle</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for box in boxes %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ box.Box_Name }}</td>
+              <td>{{ box.product_id.Product_Name }}</td>
+              <td>{{ box.building_id.Building_Name }}</td>
+              <td>{{ box.rack_id.rack_name }}</td>
+              <td>{{ box.vehicle_transit }}</td>
+              <td>{{ box.Action }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include the footer -->
+
+  <!-- Add Bootstrap JavaScript and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Report</title>
+</head>
+<body>
+    <h1>Attendance Report</h1>
+    <p>Total Working Days: {{ total_working_days }}</p>
+    <p>Total Attendance Days: {{ total_attendance_days }}</p>
+    <p>Total Absent Days: {{ total_absent_days }}</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Attendance</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in all_attendances %}
+            <tr>
+                <td>{{ attendance.employee_id }}</td>
+                <td>{{ attendance.Attendence }}</td>
+                <td>{{ attendance.Current_Date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
